@@ -20,16 +20,28 @@
                         var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
                         if (hashpattern !== null) {
                             $.getJSON(hashpattern[2], function(data) {
-								//fix for mosquitto not serving application/json header
-								//if it's not object we need to parse it first 
-								if (data !== Object(data)) data = JSON.parse(data);                            
-								//
-								freeboard.loadDashboard(data, function() {
-                                    freeboard.setEditing(false);
+					//fix for mosquitto not serving application/json header
+					//if it's not object we need to parse it first 
+					if (data !== Object(data)) data = JSON.parse(data);                            
+					//
+				 	freeboard.loadDashboard(data, function() {
+                                    	freeboard.setEditing(false);
                                 });
                             });
-                        }
+                        }else{
+			    //by default load dashboards/dashboard.json
+                            $.getJSON("dashboards/dashboard.json", function(data) {
+					//fix for mosquitto not serving application/json header
+					//if it's not object we need to parse it first 
+					if (data !== Object(data)) data = JSON.parse(data);                            
+					//
+					freeboard.loadDashboard(data, function() {
+                                        freeboard.setEditing(false);
+                                });
+                            });
 
+						
+						}
                     });
                 });
     </script>
